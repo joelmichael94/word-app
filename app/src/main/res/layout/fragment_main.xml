@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,23 +14,70 @@
             type="com.joel.wordapp.models.Word" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".ui.MainFragment">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_4"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/input_add_edit"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/app_transparent"
+                    android:hint="@string/search"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
+
+                <ImageButton
+                    android:id="@+id/ib_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/app_4"
+                    android:src="@drawable/ic_search" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/ib_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/app_4"
+                android:src="@drawable/ic_sort" />
+        </LinearLayout>
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_main"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@color/app_5" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tl_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/app_4"
+            android:textSize="20sp"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorGravity="top"
+            app:tabTextColor="@color/white" />
 
     </LinearLayout>
 </layout>

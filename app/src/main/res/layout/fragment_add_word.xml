@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.joel.wordapp.viewModels.AddWordViewModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_1"
+        tools:context=".ui.AddWordFragment">
+
+        <TextView
+            android:id="@+id/tv_add_word"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:background="@color/app_6"
+            android:gravity="center"
+            android:paddingVertical="16dp"
+            android:text="Add Word"
+            android:textColor="@color/app_1"
+            android:textSize="26sp" />
+
+        <RelativeLayout
+            android:id="@+id/rl_add_word"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_add_word"
+            android:layout_margin="32dp">
+
+            <EditText
+                android:id="@+id/et_add_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/input_add_edit"
+                android:hint="Title"
+                android:inputType="text"
+                android:padding="16dp"
+                android:textColor="@color/app_6"
+                android:textColorHint="@color/app_5"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_add_meaning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_add_title"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/input_add_edit"
+                android:hint="Meaning"
+                android:inputType="text"
+                android:padding="16dp"
+                android:textColor="@color/app_6"
+                android:textColorHint="@color/app_5"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_add_synonyms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_add_meaning"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/input_add_edit"
+                android:hint="Synonyms"
+                android:inputType="text"
+                android:padding="16dp"
+                android:textColor="@color/app_6"
+                android:textColorHint="@color/app_5"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_add_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_add_synonyms"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/input_add_edit"
+                android:hint="Details"
+                android:inputType="text"
+                android:padding="16dp"
+                android:textColor="@color/app_6"
+                android:textColorHint="@color/app_5"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_add_word_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/app_4"
+            android:clipToPadding="false"
+            app:icon="@drawable/ic_cancel"
+            app:iconSize="32dp"
+            app:iconTint="@color/app_1" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_add_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/app_6"
+            android:clipToPadding="false"
+            app:icon="@drawable/ic_confirm"
+            app:iconSize="32dp"
+            app:iconTint="@color/app_1" />
+    </RelativeLayout>
+</layout>

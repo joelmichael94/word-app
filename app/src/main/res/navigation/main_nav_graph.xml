@@ -9,5 +9,13 @@
         android:id="@+id/mainFragment"
         android:name="com.joel.wordapp.ui.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_main_to_addWord"
+            app:destination="@id/addWordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addWordFragment"
+        android:name="com.joel.wordapp.ui.AddWordFragment"
+        android:label="AddWordFragment" />
 </navigation>

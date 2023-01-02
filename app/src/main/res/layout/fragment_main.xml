@@ -23,7 +23,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/app_4"
+            android:background="@color/app_6"
             android:orientation="horizontal"
             android:paddingHorizontal="10dp"
             android:paddingVertical="10dp">
@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/input_add_edit"
+                android:background="@color/app_6"
                 android:orientation="horizontal">
 
                 <EditText
@@ -40,17 +40,17 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@color/app_transparent"
+                    android:background="@drawable/input_search"
                     android:hint="@string/search"
                     android:paddingHorizontal="10dp"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white" />
+                    android:textColor="@color/app_1"
+                    android:textColorHint="@color/app_2" />
 
                 <ImageButton
                     android:id="@+id/ib_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/app_4"
+                    android:backgroundTint="@color/app_6"
                     android:src="@drawable/ic_search" />
             </LinearLayout>
 
@@ -58,7 +58,7 @@
                 android:id="@+id/ib_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_4"
+                android:backgroundTint="@color/app_6"
                 android:src="@drawable/ic_sort" />
         </LinearLayout>
 
@@ -67,17 +67,17 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/app_5" />
+            android:background="@color/app_1" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tl_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/app_4"
+            android:background="@color/app_6"
             android:textSize="20sp"
-            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorColor="@color/app_1"
             app:tabIndicatorGravity="top"
-            app:tabTextColor="@color/white" />
+            app:tabTextColor="@color/app_1" />
 
     </LinearLayout>
 </layout>

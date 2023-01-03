@@ -1,5 +1,8 @@
 package com.joel.wordapp.ui
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,8 +14,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joel.wordapp.MainActivity
+import com.joel.wordapp.R
 import com.joel.wordapp.adapters.WordAdapter
 import com.joel.wordapp.databinding.FragmentNewWordBinding
+import com.joel.wordapp.databinding.ItemSortDialogLayoutBinding
 import com.joel.wordapp.viewModels.CompletedWordViewModel
 import com.joel.wordapp.viewModels.MainViewModel
 
@@ -25,6 +30,9 @@ class CompletedWordFragment private constructor() : Fragment() {
     private val mainViewModel: MainViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
     )
+    private var search: String = ""
+    private var order: String = ""
+    private var type: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +67,44 @@ class CompletedWordFragment private constructor() : Fragment() {
             if (it) {
                 refresh("")
                 mainViewModel.shouldRefreshWords(false)
+            }
+        }
+
+        binding.ibSearch.setOnClickListener {
+            search = binding.etSearch.text.toString()
+            refresh(search)
+        }
+
+        binding.ibSort.setOnClickListener {
+            val dialogBinding = ItemSortDialogLayoutBinding.inflate(layoutInflater)
+            val alertDialog = Dialog(requireContext(), R.style.DataBinding_AlertDialog)
+
+            alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialogBinding.rgOrder.setOnCheckedChangeListener { _, id ->
+                when (id) {
+                    R.id.rb_ascending -> order = "ascending"
+                    else -> order = "descending"
+                }
+            }
+            dialogBinding.rgType.setOnCheckedChangeListener { _, id ->
+                when (id) {
+                    R.id.rb_title -> type = "title"
+                    else -> type = "date"
+                }
+            }
+            alertDialog.setContentView(dialogBinding.root)
+            alertDialog.setCancelable(true)
+            alertDialog.show()
+
+            dialogBinding.btnSort.setOnClickListener {
+                if (dialogBinding.rgOrder.checkedRadioButtonId == -1
+                    || dialogBinding.rgType.checkedRadioButtonId == -1
+                ) {
+                    dialogBinding.tvAlert.isVisible = true
+                } else {
+                    viewModel.sortCompletedWords(search, order, type)
+                    alertDialog.dismiss()
+                }
             }
         }
     }

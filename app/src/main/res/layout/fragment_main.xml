@@ -20,47 +20,16 @@
         android:orientation="vertical"
         tools:context=".ui.MainFragment">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_app_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/app_6"
-            android:orientation="horizontal"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="16dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/app_6"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/et_search"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/input_search"
-                    android:hint="@string/search"
-                    android:paddingHorizontal="10dp"
-                    android:textColor="@color/app_1"
-                    android:textColorHint="@color/app_2" />
-
-                <ImageButton
-                    android:id="@+id/ib_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/app_6"
-                    android:src="@drawable/ic_search" />
-            </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/ib_sort"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_6"
-                android:src="@drawable/ic_sort" />
-        </LinearLayout>
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:text="@string/app_name"
+            android:textColor="@color/app_1"
+            android:textSize="22sp" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_main"

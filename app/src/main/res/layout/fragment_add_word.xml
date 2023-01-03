@@ -24,15 +24,15 @@
             android:background="@color/app_6"
             android:gravity="center"
             android:paddingVertical="16dp"
-            android:text="@string/add_word"
+            android:text=""
             android:textColor="@color/app_1"
-            android:textSize="26sp" />
+            android:textSize="22sp" />
 
         <RelativeLayout
             android:id="@+id/rl_add_word"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tv_add_word"
+            android:layout_below="@+id/tv_add_word"
             android:layout_margin="32dp">
 
             <EditText
@@ -46,7 +46,7 @@
                 android:padding="16dp"
                 android:textColor="@color/app_6"
                 android:textColorHint="@color/app_5"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -57,11 +57,11 @@
                 android:layout_marginBottom="32dp"
                 android:background="@drawable/input_add_edit"
                 android:hint="@string/meaning"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:padding="16dp"
                 android:textColor="@color/app_6"
                 android:textColorHint="@color/app_5"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -72,11 +72,11 @@
                 android:layout_marginBottom="32dp"
                 android:background="@drawable/input_add_edit"
                 android:hint="@string/synonym"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:padding="16dp"
                 android:textColor="@color/app_6"
                 android:textColorHint="@color/app_5"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -87,11 +87,11 @@
                 android:layout_marginBottom="32dp"
                 android:background="@drawable/input_add_edit"
                 android:hint="@string/details"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:padding="16dp"
                 android:textColor="@color/app_6"
                 android:textColorHint="@color/app_5"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>
 
@@ -103,7 +103,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="32dp"
             android:layout_marginBottom="32dp"
-            android:backgroundTint="@color/app_4"
+            android:backgroundTint="@color/app_5"
             android:clipToPadding="false"
             app:icon="@drawable/ic_cancel"
             app:iconSize="32dp"

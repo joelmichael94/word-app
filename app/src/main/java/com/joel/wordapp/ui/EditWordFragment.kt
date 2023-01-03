@@ -50,6 +50,7 @@ class EditWordFragment : Fragment() {
                 etAddMeaning.setText(it.meaning)
                 etAddSynonyms.setText(it.synonym)
                 etAddDetails.setText(it.details)
+                tvAddWord.setText(R.string.edit_word)
             }
         }
 
@@ -60,7 +61,7 @@ class EditWordFragment : Fragment() {
             val synonyms = binding.etAddSynonyms.text.toString()
             val details = binding.etAddDetails.text.toString()
 
-            if(validate(title, meaning, synonyms, details)) {
+            if (validate(title, meaning, synonyms, details)) {
                 val word = Word(id, title, meaning, synonyms, details, status)
                 viewModel.updateWord(id, word)
                 val bundle = Bundle()

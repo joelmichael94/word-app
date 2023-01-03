@@ -10,10 +10,10 @@
         android:id="@+id/cv_word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/app_6"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/app_5"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="title"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text=""
                 android:textColor="@color/app_1"
                 android:textSize="18sp" />
 
@@ -35,9 +37,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="definition"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text=""
                 android:textColor="@color/app_1"
-                android:textSize="15sp" />
+                android:textSize="16sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

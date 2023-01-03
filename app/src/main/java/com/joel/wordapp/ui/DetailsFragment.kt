@@ -68,15 +68,15 @@ class DetailsFragment : Fragment() {
             MaterialAlertDialogBuilder(requireContext(), R.style.DataBinding_AlertDialog)
                 .setTitle(binding.tvTitle.text).setMessage(binding.tvMeaning.text)
                 .setCancelable(true)
-                .setPositiveButton("Yes") { _, it ->
+                .setPositiveButton("Delete") { _, it ->
                     viewModel.deleteWord(navArgs.id)
                     setFragmentResult("from_details", bundle)
                     NavHostFragment.findNavController(this).popBackStack()
-                }.setNegativeButton("No") { _, it -> }
+                }.setNegativeButton("Cancel") { _, it -> }
                 .show()
         }
 
-        binding.btnCancel.setOnClickListener {
+        binding.fabDetailsBack.setOnClickListener {
             NavHostFragment.findNavController(this).popBackStack()
         }
 

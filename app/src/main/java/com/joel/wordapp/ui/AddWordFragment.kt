@@ -34,6 +34,8 @@ class AddWordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.tvAddWord.setText(R.string.add_word)
+
         binding.fabAddWord.setOnClickListener {
             val title = binding.etAddTitle.text.toString()
             val meaning = binding.etAddMeaning.text.toString()

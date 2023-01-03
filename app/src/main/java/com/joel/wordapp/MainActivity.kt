@@ -1,7 +1,5 @@
 package com.joel.wordapp
 
-import android.Manifest
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.joel.wordapp.repository.WordRepository
@@ -19,4 +17,5 @@ class MainActivity : AppCompatActivity() {
 // Recycler View
 // Floating Button
 // Tab Layout
+// View Pager
 // Dialog box

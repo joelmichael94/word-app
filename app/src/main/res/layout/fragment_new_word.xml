@@ -18,11 +18,56 @@
         android:layout_height="match_parent"
         tools:context=".ui.NewWordFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_new_word"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp" />
+            android:layout_marginBottom="38dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_6"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="16dp">
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/input_search"
+                    android:hint="@string/search"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/app_1"
+                    android:textColorHint="@color/app_2" />
+
+                <ImageButton
+                    android:id="@+id/ib_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/app_6"
+                    android:src="@drawable/ic_search" />
+
+                <ImageButton
+                    android:id="@+id/ib_sort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/app_6"
+                    android:src="@drawable/ic_sort" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_new_word"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,7 +90,7 @@
                 android:layout_gravity="center"
                 android:text="@string/no_word"
                 android:textColor="@color/app_5"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:visibility="gone" />
         </LinearLayout>
@@ -58,8 +103,8 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/app_6"
-            android:clipToPadding="false"
             app:icon="@drawable/ic_add"
+            app:iconSize="32dp"
             app:iconTint="@color/app_1" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

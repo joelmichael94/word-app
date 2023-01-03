@@ -9,13 +9,36 @@
         android:id="@+id/mainFragment"
         android:name="com.joel.wordapp.ui.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_main_to_addWord"
             app:destination="@id/addWordFragment" />
+        <action
+            android:id="@+id/action_main_to_details"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addWordFragment"
         android:name="com.joel.wordapp.ui.AddWordFragment"
         android:label="AddWordFragment" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.joel.wordapp.ui.DetailsFragment"
+        android:label="DetailsFragment">
+        <argument
+            android:name="id"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_details_to_editWord"
+            app:destination="@id/editWordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editWordFragment"
+        android:name="com.joel.wordapp.ui.EditWordFragment"
+        android:label="EditWordFragment">
+        <argument
+            android:name="id"
+            app:argType="long"
+            app:nullable="false" />
+    </fragment>
 </navigation>

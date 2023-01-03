@@ -11,7 +11,11 @@ class WordAdapter(private var items: List<Word>, val onClick: (item: Word) -> Un
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemWordHolder {
         val binding =
-            ItemWordLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemWordLayoutBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         return ItemWordHolder(binding)
     }
 

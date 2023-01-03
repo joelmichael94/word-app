@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.joel.wordapp.viewModels.DetailsViewModel" />
+
+        <variable
+            name="word"
+            type="com.joel.wordapp.models.Word" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_1"
+        tools:context=".ui.DetailsFragment">
+
+        <TextView
+            android:id="@+id/tv_word_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:background="@color/app_6"
+            android:gravity="center"
+            android:paddingVertical="16dp"
+            android:text="@string/word_details"
+            android:textColor="@color/app_1"
+            android:textSize="26sp" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_delete_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_word_details"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/app_6"
+            android:clipToPadding="false"
+            app:icon="@drawable/ic_delete"
+            app:iconTint="@color/app_1" />
+
+        <RelativeLayout
+            android:id="@+id/rl_word_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text=""
+                android:textColor="@color/app_6"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/tv_meaning_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title"
+                android:text="@string/meaning"
+                android:textColor="@color/app_6"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_meaning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_meaning_header"
+                android:layout_marginBottom="24dp"
+                android:text=""
+                android:textColor="@color/app_6"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tv_synonym_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_meaning"
+                android:text="@string/synonym"
+                android:textColor="@color/app_6"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_synonym"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_synonym_header"
+                android:layout_marginBottom="26dp"
+                android:text=""
+                android:textColor="@color/app_6"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tv_details_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_synonym"
+                android:text="@string/details"
+                android:textColor="@color/app_6"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_details_header"
+                android:layout_marginBottom="24dp"
+                android:text=""
+                android:textColor="@color/app_6"
+                android:textSize="24sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_margin="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/app_6"
+                android:text="@string/go_back"
+                android:textColor="@color/app_1" />
+
+            <Button
+                android:id="@+id/btn_edit_word"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/app_6"
+                android:text="@string/edit"
+                android:textColor="@color/app_1" />
+
+            <Button
+                android:id="@+id/btn_complete_word"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/app_6"
+                android:text="@string/complete"
+                android:textColor="@color/app_1" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

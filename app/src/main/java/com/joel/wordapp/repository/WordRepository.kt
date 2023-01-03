@@ -10,7 +10,7 @@ class WordRepository {
             "Captain",
             "A naval officer of high rank, above a commander, or a military officer of middle rank, above a lieutenant.",
             "Commander",
-            " A captain is the person in charge of a ship or aircraft."
+            "A captain is the person in charge of a ship or aircraft."
         )
     )
 

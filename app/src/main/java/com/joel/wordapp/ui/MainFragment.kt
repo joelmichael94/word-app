@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
@@ -21,6 +22,7 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
     private val newWordFragment = NewWordFragment.getInstance()
     private val completedWordFragment = CompletedWordFragment.getInstance()
+    var currentPage = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +36,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var currentPage = 0
 
         val adapter = ViewPagerAdapter(
             listOf(newWordFragment, completedWordFragment),
@@ -61,6 +62,18 @@ class MainFragment : Fragment() {
         setFragmentResultListener("from_add_word") { _, result ->
             val refresh = result.getBoolean("refresh")
             viewModel.shouldRefreshWords(refresh)
+        }
+
+        setFragmentResultListener("from_details") { _, result ->
+            val refresh = result.getBoolean("refresh")
+            viewModel.shouldRefreshWords(refresh)
+            viewModel.shouldRefreshCompletedWords(refresh)
+        }
+
+        setFragmentResultListener("from_edit_word") { _, result ->
+            val refresh = result.getBoolean("refresh")
+            viewModel.shouldRefreshWords(refresh)
+            viewModel.shouldRefreshCompletedWords(refresh)
         }
     }
 }

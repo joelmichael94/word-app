@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">Word App</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_word">No words</string>
     <string name="search">Search</string>
+    <string name="word_details">Word Details</string>
+    <string name="add_word">Add New Word</string>
+    <string name="title">Title</string>
+    <string name="meaning">Meaning</string>
+    <string name="synonym">Synonym</string>
+    <string name="details">Details</string>
+    <string name="complete">Complete</string>
+    <string name="edit">Edit</string>
+    <string name="go_back">Back</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

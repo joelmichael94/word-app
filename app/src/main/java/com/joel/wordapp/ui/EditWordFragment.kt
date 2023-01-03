@@ -8,19 +8,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.joel.wordapp.MainActivity
-import com.joel.wordapp.MyApplication
 import com.joel.wordapp.R
 import com.joel.wordapp.databinding.FragmentAddWordBinding
 import com.joel.wordapp.models.Word
-import com.joel.wordapp.viewModels.AddWordViewModel
+import com.joel.wordapp.viewModels.DetailsViewModel
+import com.joel.wordapp.viewModels.EditWordViewModel
 
-class AddWordFragment : Fragment() {
+class EditWordFragment : Fragment() {
     private lateinit var binding: FragmentAddWordBinding
-    private val viewModel: AddWordViewModel by viewModels {
-        AddWordViewModel.Provider((requireActivity() as MainActivity).wordRepo)
+    private val viewModel: EditWordViewModel by viewModels {
+        EditWordViewModel.Provider((requireActivity() as MainActivity).wordRepo)
     }
+    private val detailsViewModel: DetailsViewModel by viewModels {
+        DetailsViewModel.Provider((requireActivity() as MainActivity).wordRepo)
+    }
+    var status = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,17 +39,33 @@ class AddWordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val navArgs: EditWordFragmentArgs by navArgs()
+
+        detailsViewModel.getWordById(navArgs.id)
+
+        detailsViewModel.word.observe(viewLifecycleOwner) {
+            status = it.status
+            binding.run {
+                etAddTitle.setText(it.title)
+                etAddMeaning.setText(it.meaning)
+                etAddSynonyms.setText(it.synonym)
+                etAddDetails.setText(it.details)
+            }
+        }
+
         binding.fabAddWord.setOnClickListener {
+            val id = navArgs.id
             val title = binding.etAddTitle.text.toString()
             val meaning = binding.etAddMeaning.text.toString()
             val synonyms = binding.etAddSynonyms.text.toString()
             val details = binding.etAddDetails.text.toString()
 
-            if (validate(title, meaning, synonyms, details)) {
-                viewModel.addWord(Word(null, title, meaning, synonyms, details))
+            if(validate(title, meaning, synonyms, details)) {
+                val word = Word(id, title, meaning, synonyms, details, status)
+                viewModel.updateWord(id, word)
                 val bundle = Bundle()
                 bundle.putBoolean("refresh", true)
-                setFragmentResult("from_add_word", bundle)
+                setFragmentResult("from_edit_word", bundle)
                 NavHostFragment.findNavController(this).popBackStack()
             } else {
                 Snackbar.make(

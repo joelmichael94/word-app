@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joel.wordapp.MainActivity
@@ -45,6 +47,13 @@ class NewWordFragment private constructor() : Fragment() {
 
         viewModel.words.observe(viewLifecycleOwner) {
             adapter.setWords(it)
+            if (it.isNullOrEmpty()) {
+                binding.ivEmpty.isVisible = true
+                binding.tvEmpty.isVisible = true
+            } else {
+                binding.ivEmpty.isVisible = false
+                binding.tvEmpty.isVisible = false
+            }
         }
 
         mainViewModel.refreshWords.observe(viewLifecycleOwner) {
@@ -62,9 +71,8 @@ class NewWordFragment private constructor() : Fragment() {
     fun setupAdapter() {
         val layoutManager = LinearLayoutManager(requireContext())
         adapter = WordAdapter(emptyList()) {
-//            mainfrag, action main to deets
-//            val action = MainFragmentDirections.actionMainToDetails(it.id!!)
-//            NavHostFragment.findNavController(this).navigate(action)
+            val action = MainFragmentDirections.actionMainToDetails(it.id!!)
+            NavHostFragment.findNavController(this).navigate(action)
         }
         binding.rvNewWord.adapter = adapter
         binding.rvNewWord.layoutManager = layoutManager

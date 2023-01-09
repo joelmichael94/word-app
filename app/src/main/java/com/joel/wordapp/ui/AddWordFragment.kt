@@ -19,7 +19,7 @@ import com.joel.wordapp.viewModels.AddWordViewModel
 class AddWordFragment : Fragment() {
     private lateinit var binding: FragmentAddWordBinding
     private val viewModel: AddWordViewModel by viewModels {
-        AddWordViewModel.Provider((requireActivity() as MainActivity).wordRepo)
+        AddWordViewModel.Provider((requireActivity().applicationContext as MyApplication).wordRepo)
     }
 
     override fun onCreateView(

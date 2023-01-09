@@ -11,15 +11,21 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joel.wordapp.MainActivity
+import com.joel.wordapp.MyApplication
 import com.joel.wordapp.R
 import com.joel.wordapp.adapters.WordAdapter
 import com.joel.wordapp.databinding.FragmentNewWordBinding
 import com.joel.wordapp.databinding.ItemSortDialogLayoutBinding
+import com.joel.wordapp.models.SortBy
+import com.joel.wordapp.models.SortKey
+import com.joel.wordapp.models.SortOrder
 import com.joel.wordapp.utils.Dropdown
+import com.joel.wordapp.utils.StorageService
 import com.joel.wordapp.viewModels.MainViewModel
 import com.joel.wordapp.viewModels.NewWordViewModel
 import kotlinx.coroutines.flow.asSharedFlow
@@ -28,7 +34,10 @@ class NewWordFragment private constructor() : Fragment() {
     private lateinit var binding: FragmentNewWordBinding
     private lateinit var adapter: WordAdapter
     private val viewModel: NewWordViewModel by viewModels {
-        NewWordViewModel.Provider((requireActivity() as MainActivity).wordRepo)
+        NewWordViewModel.Provider(
+            (requireActivity().applicationContext as MyApplication).wordRepo,
+            (requireActivity().applicationContext as MyApplication).storageService
+        )
     }
     private val mainViewModel: MainViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
@@ -48,8 +57,20 @@ class NewWordFragment private constructor() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val dialogBinding = ItemSortDialogLayoutBinding.inflate(layoutInflater)
+        val alertDialog = Dialog(requireContext(), R.style.DataBinding_AlertDialog)
 
         setupAdapter()
+
+        viewModel.sortBy.observe(viewLifecycleOwner) {
+            dialogBinding.rbTitle.isChecked = it == SortBy.TITLE.name
+            dialogBinding.rbDate.isChecked = it == SortBy.DATE.name
+        }
+
+        viewModel.sortOrder.observe(viewLifecycleOwner) {
+            dialogBinding.rbAscending.isChecked = it == SortOrder.ASCENDING.name
+            dialogBinding.rbDescending.isChecked = it == SortOrder.DESCENDING.name
+        }
 
         binding.fabToDropdown.setOnClickListener {
             val action = MainFragmentDirections.actionMainToDropdown()
@@ -94,20 +115,17 @@ class NewWordFragment private constructor() : Fragment() {
         }
 
         binding.ibSort.setOnClickListener {
-            val dialogBinding = ItemSortDialogLayoutBinding.inflate(layoutInflater)
-            val alertDialog = Dialog(requireContext(), R.style.DataBinding_AlertDialog)
-
             alertDialog.window?.setBackgroundDrawableResource(R.color.app_1)
             dialogBinding.rgOrder.setOnCheckedChangeListener { _, id ->
                 when (id) {
-                    R.id.rb_ascending -> order = "ascending"
-                    else -> order = "descending"
+                    R.id.rb_ascending -> order = SortOrder.ASCENDING.name
+                    else -> order = SortOrder.DESCENDING.name
                 }
             }
             dialogBinding.rgType.setOnCheckedChangeListener { _, id ->
                 when (id) {
-                    R.id.rb_title -> type = "title"
-                    else -> type = "date"
+                    R.id.rb_title -> type = SortBy.TITLE.name
+                    else -> type = SortBy.DATE.name
                 }
             }
             alertDialog.setContentView(dialogBinding.root)
@@ -120,6 +138,8 @@ class NewWordFragment private constructor() : Fragment() {
                 ) {
                     dialogBinding.tvAlert.isVisible = true
                 } else {
+                    viewModel.onChangeSortBy(type)
+                    viewModel.onChangeSortOrder(order)
                     viewModel.sortNewWords(search, order, type)
                     alertDialog.dismiss()
                 }
@@ -128,7 +148,9 @@ class NewWordFragment private constructor() : Fragment() {
     }
 
     fun refresh(str: String) {
-        viewModel.getWords(str)
+        lifecycleScope.launchWhenResumed {
+            viewModel.getWords(str)
+        }
     }
 
     fun setupAdapter() {

@@ -20,7 +20,9 @@ import com.joel.wordapp.viewModels.DetailsViewModel
 class DetailsFragment : Fragment() {
     private lateinit var binding: FragmentDetailsBinding
     val viewModel: DetailsViewModel by viewModels {
-        DetailsViewModel.Provider((requireContext().applicationContext as MyApplication).wordRepo)
+        DetailsViewModel.Provider(
+            (requireContext().applicationContext as MyApplication).wordRepo
+        )
     }
 
     override fun onCreateView(

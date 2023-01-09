@@ -30,6 +30,13 @@
             app:exitAnim="@anim/slide_to_left"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_to_right" />
+        <action
+            android:id="@+id/action_main_to_dropdown"
+            app:destination="@id/dropdownFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
     </fragment>
     <fragment
         android:id="@+id/addWordFragment"
@@ -59,4 +66,8 @@
             app:argType="long"
             app:nullable="false" />
     </fragment>
+    <fragment
+        android:id="@+id/dropdownFragment"
+        android:name="com.joel.wordapp.ui.DropdownFragment"
+        android:label="DropdownFragment" />
 </navigation>

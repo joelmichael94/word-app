@@ -19,6 +19,7 @@ import com.joel.wordapp.R
 import com.joel.wordapp.adapters.WordAdapter
 import com.joel.wordapp.databinding.FragmentNewWordBinding
 import com.joel.wordapp.databinding.ItemSortDialogLayoutBinding
+import com.joel.wordapp.utils.Dropdown
 import com.joel.wordapp.viewModels.MainViewModel
 import com.joel.wordapp.viewModels.NewWordViewModel
 import kotlinx.coroutines.flow.asSharedFlow
@@ -49,6 +50,11 @@ class NewWordFragment private constructor() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupAdapter()
+
+        binding.fabToDropdown.setOnClickListener {
+            val action = MainFragmentDirections.actionMainToDropdown()
+            NavHostFragment.findNavController(this).navigate(action)
+        }
 
         binding.srlRefresh.setOnRefreshListener {
             viewModel.onRefresh()

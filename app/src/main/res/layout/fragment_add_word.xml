@@ -93,6 +93,12 @@
                 android:textColorHint="@color/app_5"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+<!--            <include-->
+<!--                layout="@layout/item_layout_dropdown"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/et_add_details" />-->
         </RelativeLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

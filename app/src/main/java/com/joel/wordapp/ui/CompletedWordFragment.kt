@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,7 +46,17 @@ class CompletedWordFragment private constructor() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setupAdapter()
+
+        binding.srlRefresh.setOnRefreshListener {
+            viewModel.onRefresh()
+            binding.etSearch.setText("")
+        }
+
+        viewModel.swipeRefreshLayoutFinished.asLiveData().observe(viewLifecycleOwner) {
+            binding.srlRefresh.isRefreshing = false
+        }
 
         binding.fabNewWord.setOnClickListener {
             val action = MainFragmentDirections.actionMainToAddWord()

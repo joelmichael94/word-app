@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import com.joel.wordapp.databinding.FragmentNewWordBinding
 import com.joel.wordapp.databinding.ItemSortDialogLayoutBinding
 import com.joel.wordapp.viewModels.MainViewModel
 import com.joel.wordapp.viewModels.NewWordViewModel
+import kotlinx.coroutines.flow.asSharedFlow
 
 class NewWordFragment private constructor() : Fragment() {
     private lateinit var binding: FragmentNewWordBinding
@@ -47,6 +49,15 @@ class NewWordFragment private constructor() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupAdapter()
+
+        binding.srlRefresh.setOnRefreshListener {
+            viewModel.onRefresh()
+            binding.etSearch.setText("")
+        }
+
+        viewModel.swipeRefreshLayoutFinished.asLiveData().observe(viewLifecycleOwner) {
+            binding.srlRefresh.isRefreshing = false
+        }
 
         binding.fabNewWord.setOnClickListener {
             val action = MainFragmentDirections.actionMainToAddWord()

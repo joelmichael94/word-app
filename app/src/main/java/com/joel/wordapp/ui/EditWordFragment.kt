@@ -14,7 +14,7 @@ import com.joel.wordapp.MainActivity
 import com.joel.wordapp.MyApplication
 import com.joel.wordapp.R
 import com.joel.wordapp.databinding.FragmentAddWordBinding
-import com.joel.wordapp.models.Word
+import com.joel.wordapp.data.models.Word
 import com.joel.wordapp.viewModels.DetailsViewModel
 import com.joel.wordapp.viewModels.EditWordViewModel
 

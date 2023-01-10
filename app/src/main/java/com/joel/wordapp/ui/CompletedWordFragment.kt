@@ -20,8 +20,8 @@ import com.joel.wordapp.R
 import com.joel.wordapp.adapters.WordAdapter
 import com.joel.wordapp.databinding.FragmentNewWordBinding
 import com.joel.wordapp.databinding.ItemSortDialogLayoutBinding
-import com.joel.wordapp.models.SortBy
-import com.joel.wordapp.models.SortOrder
+import com.joel.wordapp.data.models.SortBy
+import com.joel.wordapp.data.models.SortOrder
 import com.joel.wordapp.viewModels.CompletedWordViewModel
 import com.joel.wordapp.viewModels.MainViewModel
 

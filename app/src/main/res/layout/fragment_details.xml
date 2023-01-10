@@ -11,7 +11,7 @@
 
         <variable
             name="word"
-            type="com.joel.wordapp.models.Word" />
+            type="com.joel.wordapp.data.models.Word" />
     </data>
 
     <RelativeLayout

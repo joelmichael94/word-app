@@ -4,10 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.joel.wordapp.models.SortBy
-import com.joel.wordapp.models.SortKey
-import com.joel.wordapp.models.SortOrder
-import com.joel.wordapp.models.Word
+import com.joel.wordapp.data.models.SortBy
+import com.joel.wordapp.data.models.SortKey
+import com.joel.wordapp.data.models.SortOrder
+import com.joel.wordapp.data.models.Word
 import com.joel.wordapp.repository.WordRepository
 import com.joel.wordapp.utils.StorageService
 import kotlinx.coroutines.delay
@@ -46,24 +46,28 @@ class NewWordViewModel(val repo: WordRepository, val storageService: StorageServ
     }
 
     fun getWords(str: String) {
-        val res = repo.getWords(str, false)
-        words.value = res.filter { !it.status }
+        viewModelScope.launch {
+            val res = repo.getWords(str, false)
+            words.value = res.filter { !it.status }
+        }
     }
 
     fun sortNewWords(str: String, order: String, type: String) {
-        var res = repo.getWords(str, false)
-        if (order == SortOrder.ASCENDING.name && type == SortBy.TITLE.name) {
-            res = res.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) {
-                it.title
-            })
-        } else if (order == SortOrder.DESCENDING.name && type == SortBy.TITLE.name) {
-            res = res.sortedWith(compareByDescending(String.CASE_INSENSITIVE_ORDER) {
-                it.title
-            })
-        } else if (order == SortOrder.DESCENDING.name && type == SortBy.DATE.name) {
-            res = res.reversed()
+        viewModelScope.launch {
+            var res = repo.getWords(str, false)
+            if (order == SortOrder.ASCENDING.name && type == SortBy.TITLE.name) {
+                res = res.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) {
+                    it.title
+                })
+            } else if (order == SortOrder.DESCENDING.name && type == SortBy.TITLE.name) {
+                res = res.sortedWith(compareByDescending(String.CASE_INSENSITIVE_ORDER) {
+                    it.title
+                })
+            } else if (order == SortOrder.DESCENDING.name && type == SortBy.DATE.name) {
+                res = res.reversed()
+            }
+            words.value = res.filter { !it.status }
         }
-        words.value = res.filter { !it.status }
     }
 
     class Provider(val repo: WordRepository, val storageService: StorageService) :

@@ -1,59 +1,54 @@
 package com.joel.wordapp.repository
 
-import com.joel.wordapp.models.Word
+import com.joel.wordapp.data.WordDao
+import com.joel.wordapp.data.models.Word
 
-class WordRepository {
+class WordRepository(private val wordDao: WordDao) {
     private var counter = 0L
-    private val wordsMap: MutableMap<Long, Word> = mutableMapOf(
-        0L to Word(
-            0L,
-            "Captain",
-            "A naval officer of high rank, above a commander, or a military officer of middle rank, above a lieutenant.",
-            "Commander",
-            "A captain is the person in charge of a ship or aircraft."
-        )
-    )
+    private var wordsMap: MutableMap<Long, Word> = mutableMapOf()
 
-    fun getWords(str: String, status: Boolean = false): List<Word> {
-        return wordsMap.filter { (key, value) ->
+//            "Captain",
+//            "A naval officer of high rank, above a commander, or a military officer of middle rank, above a lieutenant.",
+//            "Commander",
+//            "A captain is the person in charge of a ship or aircraft."
+
+    suspend fun getWords(str: String, status: Boolean = false): List<Word> {
+        return wordDao.getWords().filter {
             Regex(
                 str,
                 RegexOption.IGNORE_CASE
-            ).containsMatchIn(value.title) && value.status == status
-        }.values.toList()
+            ).containsMatchIn(it.title) && it.status == status
+        }.toList()
     }
 
-    fun addWord(word: Word): Word? {
-        wordsMap[++counter] = word.copy(id = counter)
-        return wordsMap[counter]
+    suspend fun addWord(word: Word) {
+        wordDao.insert(word)
     }
 
-    fun getWordById(id: Long): Word? {
-        return wordsMap[id]
+    suspend fun getWordById(id: Long): Word? {
+        return wordDao.getWordById(id)
     }
 
-    fun updateWord(id: Long, word: Word): Word? {
-        wordsMap[id] = word
-        return wordsMap[id]
+    suspend fun updateWord(id: Long, word: Word) {
+        wordDao.insert(word.copy(id = id))
     }
 
-    fun deleteWord(id: Long) {
-        wordsMap.remove(id)
+    suspend fun deleteWord(id: Long) {
+        wordDao.delete(id)
     }
 
-    fun changeStatus(id: Long): Word? {
-        wordsMap[id]?.status = !wordsMap[id]?.status!!
-        return wordsMap[id]
+    suspend fun changeStatus(id: Long) {
+        wordDao.updateStatusById(id, true)
     }
 
-    companion object {
-        private var wordRepository: WordRepository? = null
-
-        fun getInstance(): WordRepository {
-            if (wordRepository == null) {
-                wordRepository = WordRepository()
-            }
-            return wordRepository!!
-        }
-    }
+//    companion object {
+//        private var wordRepository: WordRepository? = null
+//
+//        fun getInstance(): WordRepository {
+//            if (wordRepository == null) {
+//                wordRepository = WordRepository()
+//            }
+//            return wordRepository!!
+//        }
+//    }
 }

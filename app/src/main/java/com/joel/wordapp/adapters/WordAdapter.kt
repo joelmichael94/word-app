@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.joel.wordapp.databinding.ItemWordLayoutBinding
-import com.joel.wordapp.models.Word
+import com.joel.wordapp.data.models.Word
 
 class WordAdapter(private var items: List<Word>, val onClick: (item: Word) -> Unit) :
     RecyclerView.Adapter<WordAdapter.ItemWordHolder>() {

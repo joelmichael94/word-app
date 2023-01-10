@@ -2,12 +2,16 @@ package com.joel.wordapp.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.joel.wordapp.models.Word
+import androidx.lifecycle.viewModelScope
+import com.joel.wordapp.data.models.Word
 import com.joel.wordapp.repository.WordRepository
+import kotlinx.coroutines.launch
 
 class AddWordViewModel(private val repo: WordRepository) : ViewModel() {
     fun addWord(word: Word) {
-        repo.addWord(word)
+        viewModelScope.launch {
+            repo.addWord(word)
+        }
     }
 
     class Provider(val repo: WordRepository) : ViewModelProvider.Factory {

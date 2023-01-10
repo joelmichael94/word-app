@@ -1,7 +1,12 @@
-package com.joel.wordapp.models
+package com.joel.wordapp.data.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Word(
-    val id: Long? = 0,
+    @PrimaryKey
+    val id: Long? = null,
     val title: String,
     val meaning: String,
     val synonym: String,

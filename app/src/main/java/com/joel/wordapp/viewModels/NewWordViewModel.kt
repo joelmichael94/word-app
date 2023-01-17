@@ -14,6 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
+// class with functions to be used by other classes / Fragments (New Word Fragment)
 class NewWordViewModel(val repo: WordRepository, val storageService: StorageService) : ViewModel() {
     val words: MutableLiveData<List<Word>> = MutableLiveData()
     val sortBy: MutableLiveData<String> = MutableLiveData()
@@ -27,16 +28,19 @@ class NewWordViewModel(val repo: WordRepository, val storageService: StorageServ
         sortOrder.value = storageService.getString(SortKey.SORT_ORDER.name)
     }
 
+    // save value of sortBy when changed
     fun onChangeSortBy(value: String) {
         sortBy.value = value
         storageService.setString(SortKey.SORT_BY.name, value)
     }
 
+    // save value of sortOrder when changed
     fun onChangeSortOrder(value: String) {
         sortOrder.value = value
         storageService.setString(SortKey.SORT_ORDER.name, value)
     }
 
+    // refresh the layout/fragment/view when view swiped down
     fun onRefresh() {
         viewModelScope.launch {
             delay(3000)
@@ -45,6 +49,7 @@ class NewWordViewModel(val repo: WordRepository, val storageService: StorageServ
         }
     }
 
+    // fetch all the data / words
     fun getWords(str: String) {
         viewModelScope.launch {
             val res = repo.getWords(str, false)
@@ -52,6 +57,7 @@ class NewWordViewModel(val repo: WordRepository, val storageService: StorageServ
         }
     }
 
+    // sort all the data in the new words fragment
     fun sortNewWords(str: String, order: String, type: String) {
         viewModelScope.launch {
             var res = repo.getWords(str, false)

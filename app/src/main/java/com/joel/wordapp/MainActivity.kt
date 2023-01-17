@@ -6,7 +6,6 @@ import android.os.Bundle
 // Joel Michael Seah Quan Shen
 
 class MainActivity : AppCompatActivity() {
-    //    val wordRepo = WordRepository.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

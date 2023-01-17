@@ -16,8 +16,11 @@ import com.joel.wordapp.databinding.FragmentAddWordBinding
 import com.joel.wordapp.data.models.Word
 import com.joel.wordapp.viewModels.AddWordViewModel
 
+// Fragment/View bound to the Add Word UI
 class AddWordFragment : Fragment() {
     private lateinit var binding: FragmentAddWordBinding
+
+    // accessing the corresponding viewModel functions
     private val viewModel: AddWordViewModel by viewModels {
         AddWordViewModel.Provider((requireActivity().applicationContext as MyApplication).wordRepo)
     }
@@ -26,6 +29,7 @@ class AddWordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // defining the .xml file to bind this fragment to
         binding = FragmentAddWordBinding.inflate(layoutInflater)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -34,8 +38,10 @@ class AddWordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // setting the fragment HEADER text
         binding.tvAddWord.setText(R.string.add_word)
 
+        // getting values from the edit text, checking that all edit text values are valid, and submitting the values to be added into the RoomDatabase(RD)
         binding.fabAddWord.setOnClickListener {
             val title = binding.etAddTitle.text.toString()
             val meaning = binding.etAddMeaning.text.toString()
@@ -44,11 +50,14 @@ class AddWordFragment : Fragment() {
 
             if (validate(title, meaning, synonyms, details)) {
                 viewModel.addWord(Word(null, title, meaning, synonyms, details))
+
+                // sends information to the MainFragment to refresh the view
                 val bundle = Bundle()
                 bundle.putBoolean("refresh", true)
                 setFragmentResult("from_add_word", bundle)
                 NavHostFragment.findNavController(this).popBackStack()
             } else {
+                // alert for the user if any input is incomplete
                 Snackbar.make(
                     binding.root,
                     "Title, Meaning, Synonyms and Details are all required",
@@ -57,11 +66,13 @@ class AddWordFragment : Fragment() {
             }
         }
 
+        // button to return to the previous screen
         binding.fabAddWordBack.setOnClickListener {
             NavHostFragment.findNavController(this).popBackStack()
         }
     }
 
+    // function to check all the input fields
     private fun validate(vararg list: String): Boolean {
         for (field in list) {
             if (field.isEmpty()) {

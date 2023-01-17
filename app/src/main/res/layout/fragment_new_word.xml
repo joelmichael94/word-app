@@ -113,17 +113,17 @@
             app:iconSize="32dp"
             app:iconTint="@color/app_1" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/fab_to_dropdown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/app_5"
-            app:icon="@drawable/ic_edit"
-            app:iconSize="32dp"
-            app:iconTint="@color/app_1" />
-        />
+<!--        Below Button was used for teaching purposes and is not applicable to the project    -->
+<!--        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--            android:id="@+id/fab_to_dropdown"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="bottom|start"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginBottom="16dp"-->
+<!--            android:backgroundTint="@color/app_5"-->
+<!--            app:icon="@drawable/ic_edit"-->
+<!--            app:iconSize="32dp"-->
+<!--            app:iconTint="@color/app_1" />-->
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

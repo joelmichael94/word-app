@@ -25,18 +25,25 @@ import com.joel.wordapp.data.models.SortOrder
 import com.joel.wordapp.viewModels.CompletedWordViewModel
 import com.joel.wordapp.viewModels.MainViewModel
 
+// Fragment/View bound to the New Word UI
 class CompletedWordFragment private constructor() : Fragment() {
     private lateinit var binding: FragmentNewWordBinding
     private lateinit var adapter: WordAdapter
+
+    // accessing the corresponding viewModel functions
     private val viewModel: CompletedWordViewModel by viewModels {
         CompletedWordViewModel.Provider(
             (requireActivity().applicationContext as MyApplication).wordRepo,
             (requireActivity().applicationContext as MyApplication).storageService
         )
     }
+
+    // accessing a separate viewModel for different functions
     private val mainViewModel: MainViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
     )
+
+    // declaration of global variables
     private var search: String = ""
     private var order: String = ""
     private var type: String = ""
@@ -45,6 +52,7 @@ class CompletedWordFragment private constructor() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // defining the .xml file to bind this fragment to
         binding = FragmentNewWordBinding.inflate(layoutInflater)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -52,35 +60,45 @@ class CompletedWordFragment private constructor() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // binding the sortDialog "Modal" .xml to be used in this fragment
         val dialogBinding = ItemSortDialogLayoutBinding.inflate(layoutInflater)
+
+        // setting a style type for the Dialog "Modal" to follow
         val alertDialog = Dialog(requireContext(), R.style.DataBinding_AlertDialog)
 
+        // create layout for RecyclerView(RV), generate the data(from RoomDB) to display in the RV, hold navigation function
         setupAdapter()
 
+        // checks the sortDialog CHECKED radio buttons for sorting purpose
         viewModel.sortBy.observe(viewLifecycleOwner) {
             dialogBinding.rbTitle.isChecked = it == SortBy.TITLE.name
             dialogBinding.rbDate.isChecked = it == SortBy.DATE.name
         }
 
+        // checks the sortDialog CHECKED radio buttons for sorting purpose
         viewModel.sortOrder.observe(viewLifecycleOwner) {
             dialogBinding.rbAscending.isChecked = it == SortOrder.ASCENDING.name
             dialogBinding.rbDescending.isChecked = it == SortOrder.DESCENDING.name
         }
 
+        // refreshes the view/fragment when screen swiped down for refreshing and resets the search input
         binding.srlRefresh.setOnRefreshListener {
             viewModel.onRefresh()
             binding.etSearch.setText("")
         }
 
+        // checks that the swipeRefresh has finished running its function (after the delay of 3000ms) and sets the isRefreshing property to false to prevent infinite refreshing animation
         viewModel.swipeRefreshLayoutFinished.asLiveData().observe(viewLifecycleOwner) {
             binding.srlRefresh.isRefreshing = false
         }
 
+        // navigation button to Add Word Fragment / View
         binding.fabNewWord.setOnClickListener {
             val action = MainFragmentDirections.actionMainToAddWord()
             NavHostFragment.findNavController(this).navigate(action)
         }
 
+        // Element to display if no data in fragment or hide if data exists in fragment
         viewModel.words.observe(viewLifecycleOwner) {
             adapter.setWords(it)
             if (it.isNullOrEmpty()) {
@@ -92,6 +110,7 @@ class CompletedWordFragment private constructor() : Fragment() {
             }
         }
 
+        // function to refresh the view when data in fragment is changed
         mainViewModel.refreshCompletedWords.observe(viewLifecycleOwner) {
             if (it) {
                 refresh("")
@@ -99,13 +118,17 @@ class CompletedWordFragment private constructor() : Fragment() {
             }
         }
 
+        // function to refresh the data displayed in the view when search/filtering the data by its title
         binding.ibSearch.setOnClickListener {
             search = binding.etSearch.text.toString()
             refresh(search)
         }
 
+        // function to check the sortDialog functions && style
         binding.ibSort.setOnClickListener {
             alertDialog.window?.setBackgroundDrawableResource(R.color.app_1)
+
+            // checks to make sure only 1 radio button can be checked for each category
             dialogBinding.rgOrder.setOnCheckedChangeListener { _, id ->
                 when (id) {
                     R.id.rb_ascending -> order = SortOrder.ASCENDING.name
@@ -122,6 +145,7 @@ class CompletedWordFragment private constructor() : Fragment() {
             alertDialog.setCancelable(true)
             alertDialog.show()
 
+            // gets the values from the selected radio buttons and passes them to the appropriate functions
             dialogBinding.btnSort.setOnClickListener {
                 if (dialogBinding.rgOrder.checkedRadioButtonId == -1
                     || dialogBinding.rgType.checkedRadioButtonId == -1
@@ -137,12 +161,14 @@ class CompletedWordFragment private constructor() : Fragment() {
         }
     }
 
+    // function to be called when you want to re-fetch the data being displayed in the fragment
     fun refresh(str: String) {
         lifecycleScope.launchWhenResumed {
             viewModel.getWords(str)
         }
     }
 
+    // creates the layout to be used by the RecyclerView(hold the list of data), generates the data to be put into the RV, and holds the navigation function.
     fun setupAdapter() {
         val layoutManager = LinearLayoutManager(requireContext())
         adapter = WordAdapter(emptyList()) {
@@ -153,6 +179,7 @@ class CompletedWordFragment private constructor() : Fragment() {
         binding.rvNewWord.adapter = adapter
     }
 
+    // companion object to be called by the MainFragment to store THIS fragment into the TabLayout/ViewPager2 in the MainFragment.
     companion object {
         private var completedWordFragmentInstance: CompletedWordFragment? = null
         fun getInstance(): CompletedWordFragment {

@@ -9,10 +9,11 @@ import com.joel.wordapp.repository.WordRepository
 import com.joel.wordapp.ui.DetailsFragmentArgs
 import kotlinx.coroutines.launch
 
+// class with functions to be used by other classes / Fragments (Details Fragment)
 class DetailsViewModel(private val repo: WordRepository) : ViewModel() {
-
     val word: MutableLiveData<Word> = MutableLiveData()
 
+    // fetch single data by id
     fun getWordById(id: Long) {
         viewModelScope.launch {
             val res = repo.getWordById(id)
@@ -22,12 +23,14 @@ class DetailsViewModel(private val repo: WordRepository) : ViewModel() {
         }
     }
 
+    // delete data by id
     fun deleteWord(id: Long) {
         viewModelScope.launch {
             repo.deleteWord(id)
         }
     }
 
+    // change status of single data
     fun changeStatus(id: Long) {
         viewModelScope.launch {
             repo.changeStatus(id)

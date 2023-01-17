@@ -14,6 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
+// class with functions to be used by other classes / Fragments (CompletedWords Fragment)
 class CompletedWordViewModel(private val repo: WordRepository, val storageService: StorageService) :
     ViewModel() {
     val words: MutableLiveData<List<Word>> = MutableLiveData()
@@ -28,16 +29,19 @@ class CompletedWordViewModel(private val repo: WordRepository, val storageServic
         sortOrder.value = storageService.getString(SortKey.SORT_ORDER.name)
     }
 
+    // save value of sortBy when changed
     fun onChangeSortBy(value: String) {
         sortBy.value = value
         storageService.setString(SortKey.SORT_BY.name, value)
     }
 
+    // save value of sortOrder when changed
     fun onChangeSortOrder(value: String) {
         sortOrder.value = value
         storageService.setString(SortKey.SORT_ORDER.name, value)
     }
 
+    // refresh the layout/fragment/view when view swiped down
     fun onRefresh() {
         viewModelScope.launch {
             delay(3000)
@@ -46,6 +50,7 @@ class CompletedWordViewModel(private val repo: WordRepository, val storageServic
         }
     }
 
+    // fetch all the data / words
     fun getWords(str: String) {
         viewModelScope.launch {
             val res = repo.getWords(str, true)
@@ -53,6 +58,7 @@ class CompletedWordViewModel(private val repo: WordRepository, val storageServic
         }
     }
 
+    // sort all the data in the completed words fragment
     fun sortCompletedWords(str: String, order: String, type: String) {
         viewModelScope.launch {
             var res = repo.getWords(str, true)

@@ -7,7 +7,10 @@ import com.joel.wordapp.data.models.Word
 import com.joel.wordapp.repository.WordRepository
 import kotlinx.coroutines.launch
 
+// class with functions to be used by other classes / Fragments (Edit Word Fragment)
 class EditWordViewModel(private val repo: WordRepository) : ViewModel() {
+
+    // update/edit single data based on id
     fun updateWord(id: Long, word: Word) {
         viewModelScope.launch {
             repo.updateWord(id, word)

@@ -17,8 +17,11 @@ import com.joel.wordapp.R
 import com.joel.wordapp.databinding.FragmentDetailsBinding
 import com.joel.wordapp.viewModels.DetailsViewModel
 
+// Fragment / View bound to the Details UI
 class DetailsFragment : Fragment() {
     private lateinit var binding: FragmentDetailsBinding
+
+    // accessing the corresponding viewModel functions
     val viewModel: DetailsViewModel by viewModels {
         DetailsViewModel.Provider(
             (requireContext().applicationContext as MyApplication).wordRepo
@@ -29,6 +32,7 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // defining the .xml file to bind this fragment to
         binding = FragmentDetailsBinding.inflate(layoutInflater)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -37,10 +41,13 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // accessing navigation argument properties to be accessed (from mainNavGraph)
         val navArgs: DetailsFragmentArgs by navArgs()
 
+        // function to pass id into to get a single data that will be displayed in this fragment
         viewModel.getWordById(navArgs.id)
 
+        // after getting the data, fill the various corresponding text fields with the single data information
         viewModel.word.observe(viewLifecycleOwner) {
             if (it.status) binding.btnCompleteWord.isVisible = false
             binding.run {
@@ -51,6 +58,7 @@ class DetailsFragment : Fragment() {
             }
         }
 
+        // passes the id into the function to change the status of the item and re-fetch the data
         binding.btnCompleteWord.setOnClickListener {
             viewModel.changeStatus(navArgs.id)
             val bundle = Bundle()
@@ -59,11 +67,13 @@ class DetailsFragment : Fragment() {
             NavHostFragment.findNavController(this).popBackStack()
         }
 
+        // button to navigate to editWord fragment
         binding.btnEditWord.setOnClickListener {
             val action = DetailsFragmentDirections.actionDetailsToEditWord(navArgs.id)
             NavHostFragment.findNavController(this).navigate(action)
         }
 
+        // button to delete a word, produces a popup dialog for confirmation of deletion
         binding.fabDeleteWord.setOnClickListener {
             val bundle = Bundle()
             bundle.putBoolean("refresh", true)
@@ -78,6 +88,7 @@ class DetailsFragment : Fragment() {
                 .show()
         }
 
+        // button to navigate back to previous fragment / view
         binding.fabDetailsBack.setOnClickListener {
             NavHostFragment.findNavController(this).popBackStack()
         }

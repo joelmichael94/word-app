@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.joel.wordapp.viewModels.DetailsViewModel" />
+            type="com.joel.wordapp.ui.viewModels.DetailsViewModel" />
 
         <variable
             name="word"
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/app_1"
-        tools:context=".ui.DetailsFragment">
+        tools:context=".ui.fragments.DetailsFragment">
 
         <TextView
             android:id="@+id/tv_word_details"

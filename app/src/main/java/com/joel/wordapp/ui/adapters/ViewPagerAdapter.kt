@@ -1,4 +1,4 @@
-package com.joel.wordapp.adapters
+package com.joel.wordapp.ui.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

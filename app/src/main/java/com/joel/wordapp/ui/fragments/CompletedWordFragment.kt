@@ -1,8 +1,6 @@
-package com.joel.wordapp.ui
+package com.joel.wordapp.ui.fragments
 
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,32 +10,26 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.joel.wordapp.MainActivity
 import com.joel.wordapp.MyApplication
 import com.joel.wordapp.R
-import com.joel.wordapp.adapters.WordAdapter
+import com.joel.wordapp.ui.adapters.WordAdapter
 import com.joel.wordapp.databinding.FragmentNewWordBinding
 import com.joel.wordapp.databinding.ItemSortDialogLayoutBinding
 import com.joel.wordapp.data.models.SortBy
-import com.joel.wordapp.data.models.SortKey
 import com.joel.wordapp.data.models.SortOrder
-import com.joel.wordapp.utils.Dropdown
-import com.joel.wordapp.utils.StorageService
-import com.joel.wordapp.viewModels.MainViewModel
-import com.joel.wordapp.viewModels.NewWordViewModel
-import kotlinx.coroutines.flow.asSharedFlow
+import com.joel.wordapp.ui.viewModels.CompletedWordViewModel
+import com.joel.wordapp.ui.viewModels.MainViewModel
 
 // Fragment/View bound to the New Word UI
-class NewWordFragment private constructor() : Fragment() {
+class CompletedWordFragment private constructor() : Fragment() {
     private lateinit var binding: FragmentNewWordBinding
     private lateinit var adapter: WordAdapter
 
     // accessing the corresponding viewModel functions
-    private val viewModel: NewWordViewModel by viewModels {
-        NewWordViewModel.Provider(
+    private val viewModel: CompletedWordViewModel by viewModels {
+        CompletedWordViewModel.Provider(
             (requireActivity().applicationContext as MyApplication).wordRepo,
             (requireActivity().applicationContext as MyApplication).storageService
         )
@@ -65,7 +57,6 @@ class NewWordFragment private constructor() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // binding the sortDialog "Modal" .xml to be used in this fragment
         val dialogBinding = ItemSortDialogLayoutBinding.inflate(layoutInflater)
 
@@ -86,11 +77,6 @@ class NewWordFragment private constructor() : Fragment() {
             dialogBinding.rbAscending.isChecked = it == SortOrder.ASCENDING.name
             dialogBinding.rbDescending.isChecked = it == SortOrder.DESCENDING.name
         }
-
-//        binding.fabToDropdown.setOnClickListener {
-//            val action = MainFragmentDirections.actionMainToDropdown()
-//            NavHostFragment.findNavController(this).navigate(action)
-//        }
 
         // refreshes the view/fragment when screen swiped down for refreshing and resets the search input
         binding.srlRefresh.setOnRefreshListener {
@@ -122,7 +108,7 @@ class NewWordFragment private constructor() : Fragment() {
         }
 
         // function to refresh the view when data in fragment is changed
-        mainViewModel.refreshWords.observe(viewLifecycleOwner) {
+        mainViewModel.refreshCompletedWords.observe(viewLifecycleOwner) {
             if (it) {
                 refresh("")
                 mainViewModel.shouldRefreshWords(false)
@@ -165,7 +151,7 @@ class NewWordFragment private constructor() : Fragment() {
                 } else {
                     viewModel.onChangeSortBy(type)
                     viewModel.onChangeSortOrder(order)
-                    viewModel.sortNewWords(search, order, type)
+                    viewModel.sortCompletedWords(search, order, type)
                     alertDialog.dismiss()
                 }
             }
@@ -186,18 +172,18 @@ class NewWordFragment private constructor() : Fragment() {
             val action = MainFragmentDirections.actionMainToDetails(it.id!!)
             NavHostFragment.findNavController(this).navigate(action)
         }
-        binding.rvNewWord.adapter = adapter
         binding.rvNewWord.layoutManager = layoutManager
+        binding.rvNewWord.adapter = adapter
     }
 
     // companion object to be called by the MainFragment to store THIS fragment into the TabLayout/ViewPager2 in the MainFragment.
     companion object {
-        private var newWordFragmentInstance: NewWordFragment? = null
-        fun getInstance(): NewWordFragment {
-            if (newWordFragmentInstance == null) {
-                newWordFragmentInstance = NewWordFragment()
+        private var completedWordFragmentInstance: CompletedWordFragment? = null
+        fun getInstance(): CompletedWordFragment {
+            if (completedWordFragmentInstance == null) {
+                completedWordFragmentInstance = CompletedWordFragment()
             }
-            return newWordFragmentInstance!!
+            return completedWordFragmentInstance!!
         }
     }
 }

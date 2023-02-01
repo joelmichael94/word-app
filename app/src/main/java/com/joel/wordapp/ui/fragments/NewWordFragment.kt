@@ -1,38 +1,38 @@
-package com.joel.wordapp.ui
+package com.joel.wordapp.ui.fragments
 
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.joel.wordapp.MainActivity
 import com.joel.wordapp.MyApplication
 import com.joel.wordapp.R
-import com.joel.wordapp.adapters.WordAdapter
+import com.joel.wordapp.ui.adapters.WordAdapter
 import com.joel.wordapp.databinding.FragmentNewWordBinding
 import com.joel.wordapp.databinding.ItemSortDialogLayoutBinding
 import com.joel.wordapp.data.models.SortBy
 import com.joel.wordapp.data.models.SortOrder
-import com.joel.wordapp.viewModels.CompletedWordViewModel
-import com.joel.wordapp.viewModels.MainViewModel
+import com.joel.wordapp.data.service.AuthService
+import com.joel.wordapp.ui.viewModels.MainViewModel
+import com.joel.wordapp.ui.viewModels.NewWordViewModel
 
 // Fragment/View bound to the New Word UI
-class CompletedWordFragment private constructor() : Fragment() {
+class NewWordFragment private constructor() : Fragment() {
     private lateinit var binding: FragmentNewWordBinding
     private lateinit var adapter: WordAdapter
+    private var values: MutableList<String> = mutableListOf()
 
     // accessing the corresponding viewModel functions
-    private val viewModel: CompletedWordViewModel by viewModels {
-        CompletedWordViewModel.Provider(
+    private val viewModel: NewWordViewModel by viewModels {
+        NewWordViewModel.Provider(
             (requireActivity().applicationContext as MyApplication).wordRepo,
             (requireActivity().applicationContext as MyApplication).storageService
         )
@@ -58,8 +58,20 @@ class CompletedWordFragment private constructor() : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val authService = AuthService.getInstance(requireContext())
+        val user = authService.getAuthenticUser()
+
+        if (authService.isAuthenticated()) {
+            Toast.makeText(requireContext(), "You are authenticated", Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(requireContext(), "You do not have authentication", Toast.LENGTH_LONG)
+                .show()
+        }
+
         // binding the sortDialog "Modal" .xml to be used in this fragment
         val dialogBinding = ItemSortDialogLayoutBinding.inflate(layoutInflater)
 
@@ -80,6 +92,11 @@ class CompletedWordFragment private constructor() : Fragment() {
             dialogBinding.rbAscending.isChecked = it == SortOrder.ASCENDING.name
             dialogBinding.rbDescending.isChecked = it == SortOrder.DESCENDING.name
         }
+
+//        binding.fabToDropdown.setOnClickListener {
+//            val action = MainFragmentDirections.actionMainToDropdown()
+//            NavHostFragment.findNavController(this).navigate(action)
+//        }
 
         // refreshes the view/fragment when screen swiped down for refreshing and resets the search input
         binding.srlRefresh.setOnRefreshListener {
@@ -111,7 +128,7 @@ class CompletedWordFragment private constructor() : Fragment() {
         }
 
         // function to refresh the view when data in fragment is changed
-        mainViewModel.refreshCompletedWords.observe(viewLifecycleOwner) {
+        mainViewModel.refreshWords.observe(viewLifecycleOwner) {
             if (it) {
                 refresh("")
                 mainViewModel.shouldRefreshWords(false)
@@ -154,7 +171,7 @@ class CompletedWordFragment private constructor() : Fragment() {
                 } else {
                     viewModel.onChangeSortBy(type)
                     viewModel.onChangeSortOrder(order)
-                    viewModel.sortCompletedWords(search, order, type)
+                    viewModel.sortNewWords(search, order, type)
                     alertDialog.dismiss()
                 }
             }
@@ -162,31 +179,31 @@ class CompletedWordFragment private constructor() : Fragment() {
     }
 
     // function to be called when you want to re-fetch the data being displayed in the fragment
-    fun refresh(str: String) {
+    private fun refresh(str: String) {
         lifecycleScope.launchWhenResumed {
             viewModel.getWords(str)
         }
     }
 
     // creates the layout to be used by the RecyclerView(hold the list of data), generates the data to be put into the RV, and holds the navigation function.
-    fun setupAdapter() {
+    private fun setupAdapter() {
         val layoutManager = LinearLayoutManager(requireContext())
         adapter = WordAdapter(emptyList()) {
             val action = MainFragmentDirections.actionMainToDetails(it.id!!)
             NavHostFragment.findNavController(this).navigate(action)
         }
-        binding.rvNewWord.layoutManager = layoutManager
         binding.rvNewWord.adapter = adapter
+        binding.rvNewWord.layoutManager = layoutManager
     }
 
     // companion object to be called by the MainFragment to store THIS fragment into the TabLayout/ViewPager2 in the MainFragment.
     companion object {
-        private var completedWordFragmentInstance: CompletedWordFragment? = null
-        fun getInstance(): CompletedWordFragment {
-            if (completedWordFragmentInstance == null) {
-                completedWordFragmentInstance = CompletedWordFragment()
+        private var newWordFragmentInstance: NewWordFragment? = null
+        fun getInstance(): NewWordFragment {
+            if (newWordFragmentInstance == null) {
+                newWordFragmentInstance = NewWordFragment()
             }
-            return completedWordFragmentInstance!!
+            return newWordFragmentInstance!!
         }
     }
 }

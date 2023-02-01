@@ -1,6 +1,6 @@
-package com.joel.wordapp.repository
+package com.joel.wordapp.data.repository
 
-import com.joel.wordapp.data.WordDao
+import com.joel.wordapp.data.database.WordDao
 import com.joel.wordapp.data.models.Word
 
 // WordRepository class that sends function requests to the DAO queries

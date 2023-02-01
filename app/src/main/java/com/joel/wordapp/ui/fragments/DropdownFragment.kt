@@ -1,4 +1,4 @@
-package com.joel.wordapp.ui
+package com.joel.wordapp.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,7 @@ import com.joel.wordapp.utils.Dropdown
 class DropdownFragment : Fragment() {
 //    private lateinit var binding: FragmentDropdownBinding
 //    val values = listOf("abc", "def", "luffy", "zoro")
-//
+
 //    override fun onCreateView(
 //        inflater: LayoutInflater, container: ViewGroup?,
 //        savedInstanceState: Bundle?
@@ -23,16 +23,16 @@ class DropdownFragment : Fragment() {
 //        binding = FragmentDropdownBinding.inflate(layoutInflater)
 //        return binding.root
 //    }
-//
+
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        super.onViewCreated(view, savedInstanceState)
-//
+
 //        val adapter = ArrayAdapter<String>(
 //            requireContext(),
 //            android.R.layout.select_dialog_item,
 //            values
 //        )
-//
+
 //        binding.autoComplete.setAdapter(adapter)
 
 //        Dropdown.create(
@@ -44,3 +44,11 @@ class DropdownFragment : Fragment() {
 //        }
 //    }
 }
+
+/*
+private var values: MutableList<String> = MutableListOf()
+
+fun getValues() {
+getWords()
+}
+ */

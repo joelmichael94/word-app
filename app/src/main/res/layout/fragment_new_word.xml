@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.joel.wordapp.viewModels.NewWordViewModel" />
+            type="com.joel.wordapp.ui.viewModels.NewWordViewModel" />
 
         <variable
             name="word"
@@ -16,7 +16,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.NewWordFragment">
+        tools:context=".ui.fragments.NewWordFragment">
 
         <LinearLayout
             android:layout_width="match_parent"

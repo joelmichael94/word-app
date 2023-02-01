@@ -1,21 +1,17 @@
-package com.joel.wordapp.ui
+package com.joel.wordapp.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayoutMediator
-import com.joel.wordapp.adapters.ViewPagerAdapter
-import com.joel.wordapp.adapters.WordAdapter
+import com.joel.wordapp.ui.adapters.ViewPagerAdapter
 import com.joel.wordapp.databinding.FragmentMainBinding
-import com.joel.wordapp.viewModels.MainViewModel
+import com.joel.wordapp.ui.viewModels.MainViewModel
 
 // Fragment/View bound to the MainActivity UI
 class MainFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.joel.wordapp.adapters
+package com.joel.wordapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

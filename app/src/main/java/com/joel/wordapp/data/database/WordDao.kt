@@ -1,4 +1,4 @@
-package com.joel.wordapp.data
+package com.joel.wordapp.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert

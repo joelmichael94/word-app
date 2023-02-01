@@ -1,10 +1,10 @@
-package com.joel.wordapp.viewModels
+package com.joel.wordapp.ui.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.joel.wordapp.data.models.Word
-import com.joel.wordapp.repository.WordRepository
+import com.joel.wordapp.data.repository.WordRepository
 import kotlinx.coroutines.launch
 
 // class with functions to be used by other classes / Fragments (Edit Word Fragment)

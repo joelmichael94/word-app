@@ -4,13 +4,13 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
-import com.joel.wordapp.data.WordDatabase
-import com.joel.wordapp.repository.WordRepository
-import com.joel.wordapp.utils.StorageService
+import com.joel.wordapp.data.database.WordDatabase
+import com.joel.wordapp.data.repository.WordRepository
+import com.joel.wordapp.data.service.StorageService
 
 // Main Application running for the App
 class MyApplication : Application() {
-    //    val wordRepo = WordRepository.getInstance()
+    // val wordRepo = WordRepository.getInstance()
     lateinit var storageService: StorageService
     lateinit var wordRepo: WordRepository
 

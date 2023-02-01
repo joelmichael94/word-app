@@ -1,7 +1,8 @@
-package com.joel.wordapp.utils
+package com.joel.wordapp.data.service
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.joel.wordapp.data.models.User
 
 // class that stores certain settings or preferences that will remain even after app is closed and reopened
 class StorageService private constructor(
@@ -38,6 +39,24 @@ class StorageService private constructor(
 
     // not in use
     fun removeString(key: String) {
+        val editor = sharedPref.edit()
+        editor.remove(key)
+        editor.apply()
+    }
+
+    fun setUser(key: String, user: User) {
+        val editor = sharedPref.edit()
+        val jsonString = gson.toJson(user)
+        editor.putString(key, jsonString)
+        editor.apply()
+    }
+
+    fun getUser(key: String): User? {
+        val jsonString = sharedPref.getString(key, "null")
+        return gson.fromJson(jsonString, User::class.java)
+    }
+
+    fun removeUser(key: String) {
         val editor = sharedPref.edit()
         editor.remove(key)
         editor.apply()

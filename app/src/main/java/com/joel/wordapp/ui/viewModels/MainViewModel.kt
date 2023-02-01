@@ -1,4 +1,4 @@
-package com.joel.wordapp.viewModels
+package com.joel.wordapp.ui.viewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
